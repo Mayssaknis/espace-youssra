@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Espace Youssra</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div id="login-screen">
+    <div class="login-box">
+      <h1><i class="fas fa-lock"></i> Administration</h1>
+      <input type="password" id="password-input" placeholder="Mot de passe" autofocus>
+      <button onclick="checkPassword()" class="btn">Connexion</button>
+      <p id="login-error"></p>
+    </div>
+  </div>
+
+  <div id="admin-app" style="display:none">
+    <aside id="sidebar">
+      <h2>Espace Youssra</h2>
+      <p class="sidebar-sub">Administration</p>
+      <nav>
+        <a href="#" class="active" onclick="showTab('dashboard')"><i class="fas fa-chart-pie"></i> Tableau de bord</a>
+        <a href="#" onclick="showTab('appointments')"><i class="fas fa-calendar-check"></i> Réservations</a>
+        <a href="#" onclick="showTab('calendar')"><i class="fas fa-calendar-alt"></i> Calendrier</a>
+      </nav>
+      <button onclick="logout()" class="btn-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+    </aside>
+
+    <main id="main-content">
+      <header id="admin-header">
+        <h1 id="page-title">Tableau de bord</h1>
+        <div style="display:flex;gap:10px">
+          <button class="btn-header" onclick="showAddModal()"><i class="fas fa-plus"></i> Nouvelle réservation</button>
+          <a href="/" target="_blank" class="btn-header"><i class="fas fa-external-link-alt"></i> Voir le site</a>
+        </div>
+      </header>
+
+      <div id="tab-dashboard" class="tab-content active">
+        <div class="stats-grid">
+          <div class="stat-card"><i class="fas fa-calendar-day"></i><div><span id="stat-today">0</span><p>Aujourd'hui</p></div></div>
+          <div class="stat-card"><i class="fas fa-calendar-week"></i><div><span id="stat-week">0</span><p>Cette semaine</p></div></div>
+          <div class="stat-card"><i class="fas fa-spinner"></i><div><span id="stat-pending">0</span><p>À confirmer</p></div></div>
+          <div class="stat-card"><i class="fas fa-users"></i><div><span id="stat-total">0</span><p>Total</p></div></div>
+        </div>
+        <h3>Dernières réservations</h3>
+        <div id="recent-list"></div>
+      </div>
+
+      <div id="tab-appointments" class="tab-content">
+        <div class="filters">
+          <input type="date" id="filter-date" onchange="loadAppointments()">
+          <select id="filter-status" onchange="loadAppointments()">
+            <option value="">Tous les statuts</option>
+            <option value="pending">En attente</option>
+            <option value="confirmed">Confirmé</option>
+            <option value="arrived">Arrivé(e)</option>
+            <option value="completed">Terminé</option>
+            <option value="cancelled">Annulé</option>
+          </select>
+          <input type="text" id="filter-search" placeholder="Rechercher nom/téléphone..." oninput="loadAppointments()">
+        </div>
+        <div class="table-wrapper">
+          <table id="appointments-table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Service</th>
+                <th>Date</th>
+                <th>Heure</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="appointments-body"></tbody>
+          </table>
+        </div>
+        <p id="no-appointments" style="display:none">Aucune réservation trouvée.</p>
+        <div id="detail-modal" class="modal" style="display:none" onclick="closeModal(event)">
+          <div class="modal-content" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h3>Détails du rendez-vous</h3>
+            <div id="detail-body"></div>
+            <textarea id="internal-notes" placeholder="Notes internes..." rows="3"></textarea>
+            <button onclick="saveNotes()" class="btn">Enregistrer les notes</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-calendar" class="tab-content">
+        <div class="cal-nav">
+          <button onclick="changeWeek(-1)"><i class="fas fa-chevron-left"></i></button>
+          <h3 id="cal-title"></h3>
+          <button onclick="changeWeek(1)"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div id="cal-grid"></div>
+      </div>
+    </main>
+  </div>
+
+  <div id="add-modal" class="modal" style="display:none" onclick="closeAddModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="modal-close" onclick="closeAddModal()">&times;</span>
+      <h3><i class="fas fa-plus"></i> Nouvelle réservation</h3>
+      <form id="add-form" onsubmit="addAppointment(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nom du client *</label>
+            <input type="text" id="add-name" required>
+          </div>
+          <div class="form-group">
+            <label>Email *</label>
+            <input type="email" id="add-email" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Téléphone</label>
+            <input type="tel" id="add-phone">
+          </div>
+          <div class="form-group">
+            <label>Service *</label>
+            <select id="add-service" required>
+              <option value="">Sélectionner...</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Date *</label>
+            <input type="date" id="add-date" required>
+          </div>
+          <div class="form-group">
+            <label>Heure *</label>
+            <input type="time" id="add-time" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Notes</label>
+          <textarea id="add-notes" rows="2"></textarea>
+        </div>
+        <p id="add-error" style="color:#e74c3c;display:none;margin-bottom:10px"></p>
+        <button type="submit" class="btn" style="width:100%">Ajouter le rendez-vous</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

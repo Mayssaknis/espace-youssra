@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espace Youssra - Coiffure & Spa</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <span class="logo-text">Espace Youssra</span>
+        <span class="logo-subtitle">Coiffure & Spa</span>
+      </div>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#offers">Offres</a></li>
+        <li><a href="#booking">Réservation</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="hero">
+      <h1>Bienvenue à Espace Youssra</h1>
+      <p>Un nouveau lieu dédié à votre beauté, votre bien-être et votre confiance</p>
+      <a href="#booking" class="btn">Réserver maintenant</a>
+    </div>
+  </header>
+
+  <section id="services">
+    <h2>Nos Services</h2>
+    <div class="services-grid" id="services-grid"></div>
+  </section>
+
+  <section id="offers">
+    <h2>Nos Prestations</h2>
+    <div class="offers-container" id="offers-container"></div>
+  </section>
+
+  <section id="booking">
+    <h2>Réserver un Rendez-vous</h2>
+    <form id="booking-form">
+      <div class="form-group">
+        <input type="text" id="client_name" placeholder="Votre nom" required>
+      </div>
+      <div class="form-group">
+        <input type="email" id="client_email" placeholder="Votre email" required>
+      </div>
+      <div class="form-group">
+        <input type="tel" id="client_phone" placeholder="Votre téléphone">
+      </div>
+      <div class="form-group">
+        <select id="service_id" required>
+          <option value="">Choisissez un service</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <input type="date" id="appointment_date" required>
+        </div>
+        <div class="form-group">
+          <input type="time" id="appointment_time" required>
+          <p id="time-warning" class="warning-msg" style="display:none"></p>
+        </div>
+      </div>
+      <div class="form-group">
+        <textarea id="notes" placeholder="Notes supplémentaires (optionnel)"></textarea>
+      </div>
+      <button type="submit" class="btn">Confirmer la réservation</button>
+      <p id="form-message"></p>
+    </form>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-info">
+      <div class="contact-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <div>
+          <strong>Adresse :</strong>
+          <p>Rue de Mednine, Zarzis 4170, Tunisie</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-phone"></i>
+        <div>
+          <strong>Téléphone :</strong>
+          <p><a href="tel:+21626430123">+216 26 430 123</a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <i class="fas fa-clock"></i>
+        <div>
+          <strong>Horaires :</strong>
+          <p>Lun-Sam 9h00 - 20h00</p>
+        </div>
+      </div>
+    </div>
+    <div class="social-links">
+      <h3>Restez connectés !</h3>
+      <a href="https://www.facebook.com/Espaceyoussra" target="_blank" class="social-btn facebook">
+        <i class="fab fa-facebook"></i> Espaceyoussra
+      </a>
+      <a href="https://www.instagram.com/espace_youssra_zarzis" target="_blank" class="social-btn instagram">
+        <i class="fab fa-instagram"></i> espace_youssra_zarzis
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2026 Espace Youssra - Coiffure &amp; Spa. Tous droits réservés.</p>
+    <p class="footer-tagline">BEAUTÉ • BIEN-ÊTRE • CONFIANCE</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

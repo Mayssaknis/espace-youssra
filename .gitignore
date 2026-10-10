@@ -1,0 +1,7 @@
+node_modules/
+spa.db
+spa.db-shm
+spa.db-wal
+*.log
+.env
+.DS_Store
