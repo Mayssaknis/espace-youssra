@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: espace-youssra
+    runtime: node
+    repo: https://github.com/Mayssaknis/espace-youssra
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+    disk:
+      name: spa-data
+      mountPath: /opt/render/project/data
+      sizeGB: 1
+
+path: .
